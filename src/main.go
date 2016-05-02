@@ -7,6 +7,7 @@ import (
 	//"image/jpeg"
 	"github.com/rwcarlsen/goexif/exif"
 	"io/ioutil"
+	"strings"
 )
 
 func main() {
@@ -50,11 +51,21 @@ func xi(f *os.File) {
 		log.Println(err)
 	}
 	if x != nil {
-		tm, _ := x.DateTime()
-		fmt.Println("Taken: ", tm)
+		str := x.String()
+		if strings.Contains(str, "PixelYDimension") {
+			tm, _ := x.DateTime()
+			fmt.Println("Taken: ", tm)
 
-		lat, long, _ := x.LatLong()
-		fmt.Println("lat, long: ", lat, ", ", long)
-		fmt.Println(x.String())
+			lat, long, _ := x.LatLong()
+			fmt.Println("lat, long: ", lat, ", ", long)
+			fmt.Println(x.String())
+
+			phrase := `PixelYDimension: "`
+			start := strings.Index(str, phrase) + len(phrase)
+			end := start + strings.Index(str[start:], `"`)
+			fmt.Println(start)
+			fmt.Println(end)
+			fmt.Println(str[start:end])
+		}
 	}
 }
