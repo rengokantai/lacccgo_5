@@ -9,13 +9,16 @@ import (
 	"io/ioutil"
 	"strings"
 	"sort"
+	"strconv"
+	"io"
 )
 
 func main() {
 	xs:=getImages()
 	sort.Strings(xs)
 	for i,v :=range xs{
-		fmt.Println(i,v)
+			fmt.Println(i,v)
+			createFile(i,v)
 	}
 }
 func getImages() []string{
@@ -83,4 +86,18 @@ func xi(f *os.File)string{
 		}
 	}
 	return ""
+}
+
+func createFile(i int,s string){
+	path:=strings.Split(s,"|")[1]
+	of,err:=os.Open(path)
+	if err!=nil{
+		log.Println("err opening ",err)
+	}
+	nf, err:=os.Create(strconv.Itoa(i)+".jpg")
+	if err!=nil{
+		log.Println("err opening ",err)
+	}
+	io.Copy(nf,of) //(new,old),(dest,src)
+
 }
