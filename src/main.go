@@ -89,12 +89,14 @@ func xi(f *os.File)string{
 }
 
 func createFile(i int,s string){
-	path:=strings.Split(s,"|")[1]
+	xs:=strings.Split(s,"|")[1]
+	desc:=xs[0]
+	path:=xs[1]
 	of,err:=os.Open(path)
 	if err!=nil{
 		log.Println("err opening ",err)
 	}
-	nf, err:=os.Create(strconv.Itoa(i)+".jpg")
+	nf, err:=os.Create(strconv.Itoa(i)+desc+".jpg")
 	if err!=nil{
 		log.Println("err opening ",err)
 	}

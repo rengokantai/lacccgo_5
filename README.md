@@ -13,3 +13,18 @@ go get -u github.com/rwcarlsen/goexif/exif  //update
 ```
 ######11
 finished 11
+
+######15
+```
+f.err:=os.Openfile(path,os.O_APPEND | os.O_WRONLY,0600)
+if _,err=f.WriteString(text);err!=nil{}
+```
+######16
+```
+strconv.Itoa(int)
+os.Rename(old,new)
+files,_:=ioutil.ReadDir(dir)
+for i,f:=range files{
+fmt.Print(f.Name())
+}
+```
