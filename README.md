@@ -8,7 +8,8 @@ resource
 ######5
 use third party
 ```
-go get -u github.com/rwcarlsen/goexif/exif
+go get github.com/rwcarlsen/goexif/exif  //download
+go get -u github.com/rwcarlsen/goexif/exif  //update
 ```
 ######11
 finished 11

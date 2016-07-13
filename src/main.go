@@ -8,10 +8,18 @@ import (
 	"github.com/rwcarlsen/goexif/exif"
 	"io/ioutil"
 	"strings"
+	"sort"
 )
 
 func main() {
-
+	xs:=getImages()
+	sort.Strings(xs)
+	for i,v :=range xs{
+		fmt.Println(i,v)
+	}
+}
+func getImages() []string{
+		var paths []string
 filepath.Walk("./", func(path string, info os.FileInfo, err error) error {
 if info.IsDir() {
 return nil
@@ -38,13 +46,18 @@ case ".jpg", ".jpeg":
 //	fmt.Printf("%d %d %d %d \n", r, g, b, a)
 
 
-	xi(f)
+	str:=xi(f)
+	if str!=""{
+		str=str+"|"+path
+		paths=append(paths,str)
+	}
 }
 return nil
 })
+	return paths
 }
 
-func xi(f *os.File) {
+func xi(f *os.File)string{
 	x, err := exif.Decode(f)
 	if err != nil {
 		log.SetOutput(ioutil.Discard)
@@ -63,9 +76,11 @@ func xi(f *os.File) {
 			phrase := `PixelYDimension: "`
 			start := strings.Index(str, phrase) + len(phrase)
 			end := start + strings.Index(str[start:], `"`)
-			fmt.Println(start)
-			fmt.Println(end)
-			fmt.Println(str[start:end])
+//			fmt.Println(start)
+//			fmt.Println(end)
+//			fmt.Println(str[start:end])
+			return str[start:end]
 		}
 	}
+	return ""
 }
